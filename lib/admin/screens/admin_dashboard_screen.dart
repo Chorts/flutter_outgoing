@@ -126,9 +126,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   @override
   Widget build(BuildContext context) {
     if (_isCheckingAuth) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      );
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
     return Scaffold(
@@ -136,10 +134,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
       body: Row(
         children: [
           // ── Sidebar Navigasi ──
-          AdminSidebar(
-            selectedIndex: 0,
-            onItemSelected: (idx) {},
-          ),
+          AdminSidebar(selectedIndex: 0, onItemSelected: (idx) {}),
 
           // ── Konten Utama ──
           Expanded(
@@ -148,7 +143,8 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                 // Header Bar
                 AdminHeader(
                   title: 'Antrean Transaksi Outgoing',
-                  subtitle: 'Verifikasi bukti transfer dan pencatatan penerusan dana ke mitra luar negeri',
+                  subtitle:
+                      'Verifikasi bukti transfer dan pencatatan penerusan dana ke mitra luar negeri',
                   admin: _currentAdmin,
                   onRefresh: _loadDashboardData,
                 ),
@@ -316,7 +312,10 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                   borderRadius: BorderRadius.circular(8),
                   borderSide: const BorderSide(color: Color(0xFFCBD5E1)),
                 ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 10,
+                ),
               ),
               onSubmitted: (_) => _loadDashboardData(),
             ),
@@ -335,11 +334,23 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                 value: _selectedStatus,
                 items: const [
                   DropdownMenuItem(value: 'Semua', child: Text('Semua Status')),
-                  DropdownMenuItem(value: 'Diproses', child: Text('Diproses (Menunggu Verifikasi)')),
-                  DropdownMenuItem(value: 'Diverifikasi', child: Text('Diverifikasi (Siap Kirim)')),
-                  DropdownMenuItem(value: 'Diteruskan', child: Text('Diteruskan ke Mitra')),
+                  DropdownMenuItem(
+                    value: 'Diproses',
+                    child: Text('Diproses (Menunggu Verifikasi)'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'Diverifikasi',
+                    child: Text('Diverifikasi (Siap Kirim)'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'Diteruskan',
+                    child: Text('Diteruskan ke Mitra'),
+                  ),
                   DropdownMenuItem(value: 'Selesai', child: Text('Selesai')),
-                  DropdownMenuItem(value: 'Gagal', child: Text('Ditolak / Gagal')),
+                  DropdownMenuItem(
+                    value: 'Gagal',
+                    child: Text('Ditolak / Gagal'),
+                  ),
                 ],
                 onChanged: (val) {
                   if (val != null) {
@@ -428,7 +439,9 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: DataTable(
-                headingRowColor: WidgetStateProperty.all(const Color(0xFFF8FAFC)),
+                headingRowColor: WidgetStateProperty.all(
+                  const Color(0xFFF8FAFC),
+                ),
                 dataRowMinHeight: 64,
                 dataRowMaxHeight: 64,
                 columns: const [
@@ -442,11 +455,13 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                   DataColumn(label: Text('Aksi')),
                 ],
                 rows: _transaksiList.map((tx) {
-                  final ref = tx['referensi_transaksi']?.toString() ??
+                  final ref =
+                      tx['referensi_transaksi']?.toString() ??
                       tx['referensi_trans']?.toString() ??
                       '-';
                   final pengguna = tx['pengguna'] as Map<String, dynamic>?;
-                  final pengirimNama = pengguna?['nama_lengkap']?.toString() ?? 'Nasabah';
+                  final pengirimNama =
+                      pengguna?['nama_lengkap']?.toString() ?? 'Nasabah';
                   final pengirimEmail = pengguna?['email']?.toString() ?? '-';
 
                   final nominalIdr = tx['nominal_idr'] as num?;
@@ -454,7 +469,9 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                   final cur = tx['mata_uang_tujuan']?.toString() ?? '';
                   final penerima = tx['nama_penerima']?.toString() ?? '-';
 
-                  final sp = tx['status_pembayaran']?.toString() ?? 'menunggu_pembayaran';
+                  final sp =
+                      tx['status_pembayaran']?.toString() ??
+                      'menunggu_pembayaran';
                   final st = tx['status_transfer']?.toString() ?? 'diproses';
 
                   return DataRow(
@@ -463,7 +480,10 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                       DataCell(
                         Text(
                           _formatTanggal(tx['dibuat_pada']?.toString()),
-                          style: const TextStyle(fontSize: 12, color: Color(0xFF64748B)),
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: Color(0xFF64748B),
+                          ),
                         ),
                       ),
                       // Referensi
@@ -492,7 +512,10 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                             ),
                             Text(
                               pengirimEmail,
-                              style: const TextStyle(fontSize: 11, color: Color(0xFF64748B)),
+                              style: const TextStyle(
+                                fontSize: 11,
+                                color: Color(0xFF64748B),
+                              ),
                             ),
                           ],
                         ),
@@ -515,7 +538,10 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                           children: [
                             Text(
                               penerima,
-                              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+                              style: const TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                             Text(
                               '${valas != null ? valas.toStringAsFixed(2) : "0"} $cur',
@@ -532,34 +558,42 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                       DataCell(StatusBadge(status: sp, isPaymentStatus: true)),
                       // Status Transfer
                       DataCell(StatusBadge(status: st, isPaymentStatus: false)),
+                      //
+                      DataCell(Text('Detail')),
                       // Tombol Aksi
-                      DataCell(
-                        ElevatedButton.icon(
-                          onPressed: () async {
-                            final changed = await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => AdminDetailTransaksiScreen(
-                                  transaksiId: tx['id'].toString(),
-                                  adminUser: _currentAdmin,
-                                ),
-                              ),
-                            );
-                            if (changed == true) {
-                              _loadDashboardData();
-                            }
-                          },
-                          icon: const Icon(Icons.visibility_outlined, size: 14),
-                          label: const Text('Periksa'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue.shade700,
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                            textStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-                            elevation: 0,
-                          ),
-                        ),
-                      ),
+                      // DataCell(
+                      //   ElevatedButton.icon(
+                      //     onPressed: () async {
+                      //       final changed = await Navigator.push(
+                      //         context,
+                      //         MaterialPageRoute(
+                      //           builder: (_) => AdminDetailTransaksiScreen(
+                      //             transaksiId: tx['id'].toString(),
+                      //             adminUser: _currentAdmin,
+                      //           ),
+                      //         ),
+                      //       );
+                      //       if (changed == true) {
+                      //         _loadDashboardData();
+                      //       }
+                      //     },
+                      //     icon: const Icon(Icons.visibility_outlined, size: 14),
+                      //     label: const Text('Periksa'),
+                      //     style: ElevatedButton.styleFrom(
+                      //       backgroundColor: Colors.blue.shade700,
+                      //       foregroundColor: Colors.white,
+                      //       padding: const EdgeInsets.symmetric(
+                      //         horizontal: 12,
+                      //         vertical: 8,
+                      //       ),
+                      //       textStyle: const TextStyle(
+                      //         fontSize: 12,
+                      //         fontWeight: FontWeight.bold,
+                      //       ),
+                      //       elevation: 0,
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   );
                 }).toList(),
